@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 
-import kaboo.kaboochat.chat.domain.dto.request.ChatRequest;
+import kaboo.kaboochat.chat.domain.dto.request.ChatMessageRequest;
 
 /**
  * @author : parkjihyeok
@@ -33,7 +33,7 @@ class RedisPublisherTest {
 	void publisherTest() {
 		// Given
 		given(channelTopic.getTopic()).willReturn("chatroom");
-		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
+		ChatMessageRequest req = new ChatMessageRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
 
 		// When
 		redisPublisher.publish(req);

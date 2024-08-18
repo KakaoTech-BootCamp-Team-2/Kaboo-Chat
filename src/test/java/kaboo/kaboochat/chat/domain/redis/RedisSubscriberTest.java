@@ -2,8 +2,6 @@ package kaboo.kaboochat.chat.domain.redis;
 
 import static org.mockito.BDDMockito.*;
 
-import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +12,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kaboo.kaboochat.chat.domain.dto.request.ChatRequest;
+import kaboo.kaboochat.chat.domain.dto.request.ChatMessageRequest;
 
 /**
  * @author : parkjihyeok
@@ -35,8 +33,8 @@ class RedisSubscriberTest {
 	@DisplayName("웹 소켓 클라이언트 전송 테스트 (성공)")
 	void subscriberTest() throws Exception {
 		// Given
-		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
-		given(objectMapper.readValue(anyString(), eq(ChatRequest.class))).willReturn(req);
+		ChatMessageRequest req = new ChatMessageRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
+		given(objectMapper.readValue(anyString(), eq(ChatMessageRequest.class))).willReturn(req);
 
 		// When
 		redisSubscriber.sendMessage("any string");
@@ -49,8 +47,8 @@ class RedisSubscriberTest {
 	@DisplayName("웹 소켓 클라이언트 전송 테스트 (실패)")
 	void subscriberFailTest() throws Exception {
 		// Given
-		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
-		given(objectMapper.readValue(anyString(), eq(ChatRequest.class)))
+		ChatMessageRequest req = new ChatMessageRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
+		given(objectMapper.readValue(anyString(), eq(ChatMessageRequest.class)))
 				.willThrow(new RuntimeException("Something Wrong"));
 
 		// When

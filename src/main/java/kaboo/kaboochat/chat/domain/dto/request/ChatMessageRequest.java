@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatRequest {
+public class ChatMessageRequest {
 
 	private String chatRoomUUID; // 채팅방 UUID
 	private String username; // 전송한 사용자의 ID

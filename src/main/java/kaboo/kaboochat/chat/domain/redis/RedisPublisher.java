@@ -4,7 +4,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
-import kaboo.kaboochat.chat.domain.dto.request.ChatRequest;
+import kaboo.kaboochat.chat.domain.dto.request.ChatMessageRequest;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -26,9 +26,9 @@ public class RedisPublisher {
 	/**
 	 * 지정된 Redis 채널로 메시지를 발행합니다.
 	 *
-	 * @param chat 발행할 메시지 데이터를 담은 DTO
+	 * @param request 발행할 메시지 데이터를 담은 DTO
 	 */
-	public void publish(ChatRequest chat) {
-		redisTemplate.convertAndSend(channelTopic.getTopic(), chat);
+	public void publish(ChatMessageRequest request) {
+		redisTemplate.convertAndSend(channelTopic.getTopic(), request);
 	}
 }

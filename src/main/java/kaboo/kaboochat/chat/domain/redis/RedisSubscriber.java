@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kaboo.kaboochat.chat.domain.dto.request.ChatRequest;
+import kaboo.kaboochat.chat.domain.dto.request.ChatMessageRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,11 +33,11 @@ public class RedisSubscriber {
 	 * 메시지를 JSON 문자열에서 DTO 객체로 변환한 하여 정보를 추출하고, 해당 채팅방을 구독 중인 WebSocket 클라이언트에게 전송합니다.
 	 * </p>
 	 *
-	 * @param chatRequest Redis에서 수신된 JSON 문자열 형식의 메시지.
+	 * @param chatMessageRequest Redis에서 수신된 JSON 문자열 형식의 메시지.
 	 */
-	public void sendMessage(String chatRequest) {
+	public void sendMessage(String chatMessageRequest) {
 		try {
-			ChatRequest chat = objectMapper.readValue(chatRequest, ChatRequest.class);
+			ChatMessageRequest chat = objectMapper.readValue(chatMessageRequest, ChatMessageRequest.class);
 			// 채팅방을 구독 중인 WebSocket 클라이언트에게 메시지 전송
 			messagingTemplate.convertAndSend("/sub/chat/room/" + chat.getChatRoomUUID(), chat);
 		} catch (Exception e) {
