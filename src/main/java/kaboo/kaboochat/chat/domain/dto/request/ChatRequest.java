@@ -1,7 +1,5 @@
 package kaboo.kaboochat.chat.domain.dto.request;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatRequest {
 
-	private String roomId;        // 채팅방 번호
-	private String userId; // 채팅을 전송한 유저
-	private String message; // 채팅 내용
-	private LocalDateTime date; // 전송 시간
+	private String chatRoomUUID; // 채팅방 UUID
+	private String username; // 전송한 사용자의 ID
+	private String nickname; // 전송한 사용자의 닉네임
+	private String message; // 메시지 내용
 }

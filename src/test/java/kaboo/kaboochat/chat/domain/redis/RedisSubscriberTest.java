@@ -35,7 +35,7 @@ class RedisSubscriberTest {
 	@DisplayName("웹 소켓 클라이언트 전송 테스트 (성공)")
 	void subscriberTest() throws Exception {
 		// Given
-		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "안녕하세요!", LocalDateTime.of(2024, 1, 1, 12, 40));
+		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
 		given(objectMapper.readValue(anyString(), eq(ChatRequest.class))).willReturn(req);
 
 		// When
@@ -49,9 +49,9 @@ class RedisSubscriberTest {
 	@DisplayName("웹 소켓 클라이언트 전송 테스트 (실패)")
 	void subscriberFailTest() throws Exception {
 		// Given
-		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "안녕하세요!", LocalDateTime.of(2024, 1, 1, 12, 40));
-		given(objectMapper.readValue(anyString(), eq(ChatRequest.class))).willThrow(
-				new RuntimeException("Something Wrong"));
+		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
+		given(objectMapper.readValue(anyString(), eq(ChatRequest.class)))
+				.willThrow(new RuntimeException("Something Wrong"));
 
 		// When
 		redisSubscriber.sendMessage("any string");

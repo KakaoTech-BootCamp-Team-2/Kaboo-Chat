@@ -2,8 +2,6 @@ package kaboo.kaboochat.chat.domain.redis;
 
 import static org.mockito.BDDMockito.*;
 
-import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +33,7 @@ class RedisPublisherTest {
 	void publisherTest() {
 		// Given
 		given(channelTopic.getTopic()).willReturn("chatroom");
-		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "안녕하세요!", LocalDateTime.of(2024, 1, 1, 12, 40));
+		ChatRequest req = new ChatRequest("AAA-BBB", "pjh5365", "justin", "안녕하세요!");
 
 		// When
 		redisPublisher.publish(req);

@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Redis에서 구독된 메시지를 처리하고 웹 소켓 클라이언트에게 전송하는 클래스
- *
  * <p>
  * 이 클래스는 Redis에서 발행된 메시지를 대기하고 DTO로 변환하여, 해당 채팅방을 구독하고 있는 웹 소켓 클라이언트에게 전송합니다.
  * </p>
@@ -40,7 +39,7 @@ public class RedisSubscriber {
 		try {
 			ChatRequest chat = objectMapper.readValue(chatRequest, ChatRequest.class);
 			// 채팅방을 구독 중인 WebSocket 클라이언트에게 메시지 전송
-			messagingTemplate.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
+			messagingTemplate.convertAndSend("/sub/chat/room/" + chat.getChatRoomUUID(), chat);
 		} catch (Exception e) {
 			log.error("[Kaboo-Chat]: 예상치 못한 예외가 발생하였습니다. 내용 = {}", e.getMessage());
 		}
