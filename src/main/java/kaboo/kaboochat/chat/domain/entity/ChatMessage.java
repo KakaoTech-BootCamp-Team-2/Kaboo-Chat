@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import kaboo.kaboochat.chat.domain.dto.request.ChatRequest;
+import kaboo.kaboochat.chat.domain.dto.request.ChatMessageRequest;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE) // createMessage 메서드로만 메시지 생성
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // createMessage 메서드로만 메시지 생성
-@Builder
+@Builder(access = AccessLevel.PRIVATE) // createMessage 메서드로만 메시지 생성
 @Document(collection = "chatMessage")
 public class ChatMessage {
 
@@ -33,7 +33,7 @@ public class ChatMessage {
 	private String message; // 메시지 내용
 	private LocalDateTime sendAt; // 메시지 전송시간
 
-	public static ChatMessage createMessage(ChatRequest dto) {
+	public static ChatMessage createMessage(ChatMessageRequest dto) {
 		return ChatMessage.builder()
 				.chatRoomUUID(dto.getChatRoomUUID())
 				.username(dto.getUsername())

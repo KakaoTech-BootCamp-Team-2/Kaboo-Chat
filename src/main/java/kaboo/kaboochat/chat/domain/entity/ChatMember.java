@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // createChatMember 메서드로만 메시지 생성, Entity이기 때문에 PROTECTED로 설정
 @AllArgsConstructor(access = AccessLevel.PRIVATE) // createChatMember 메서드로만 메시지 생성
-@Builder
+@Builder(access = AccessLevel.PRIVATE) // createChatMember 메서드로만 메시지 생성
 public class ChatMember {
 
 	@Id
