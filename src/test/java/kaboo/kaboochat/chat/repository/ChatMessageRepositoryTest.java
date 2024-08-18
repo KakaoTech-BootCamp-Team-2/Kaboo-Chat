@@ -1,7 +1,11 @@
 package kaboo.kaboochat.chat.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.util.ReflectionTestUtils.*;
 
+import java.time.LocalDateTime;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,15 +43,39 @@ class ChatMessageRepositoryTest {
 		ChatMessageRequest request7 = new ChatMessageRequest("room1", "user7", "nick7", "안녕7!");
 		ChatMessageRequest request8 = new ChatMessageRequest("room1", "user8", "nick8", "안녕8!");
 		ChatMessageRequest request9 = new ChatMessageRequest("room1", "user9", "nick9", "안녕9!");
-		chatMessageRepository.save(ChatMessage.createMessage(request1));
-		chatMessageRepository.save(ChatMessage.createMessage(request2));
-		chatMessageRepository.save(ChatMessage.createMessage(request3));
-		chatMessageRepository.save(ChatMessage.createMessage(request4));
-		chatMessageRepository.save(ChatMessage.createMessage(request5));
-		chatMessageRepository.save(ChatMessage.createMessage(request6));
-		chatMessageRepository.save(ChatMessage.createMessage(request7));
-		chatMessageRepository.save(ChatMessage.createMessage(request8));
-		chatMessageRepository.save(ChatMessage.createMessage(request9));
+		ChatMessage m1 = ChatMessage.createMessage(request1);
+		ChatMessage m2 = ChatMessage.createMessage(request2);
+		ChatMessage m3 = ChatMessage.createMessage(request3);
+		ChatMessage m4 = ChatMessage.createMessage(request4);
+		ChatMessage m5 = ChatMessage.createMessage(request5);
+		ChatMessage m6 = ChatMessage.createMessage(request6);
+		ChatMessage m7 = ChatMessage.createMessage(request7);
+		ChatMessage m8 = ChatMessage.createMessage(request8);
+		ChatMessage m9 = ChatMessage.createMessage(request9);
+		// 리플렉션을 사용해 시간 필드를 고정시켜 테스트의 일관성유지
+		setField(m1, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 1));
+		setField(m2, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 2));
+		setField(m3, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 3));
+		setField(m4, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 4));
+		setField(m5, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 5));
+		setField(m6, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 6));
+		setField(m7, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 7));
+		setField(m8, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 8));
+		setField(m9, "sendAt", LocalDateTime.of(2024, 1, 1, 1, 9));
+		chatMessageRepository.save(m1);
+		chatMessageRepository.save(m2);
+		chatMessageRepository.save(m3);
+		chatMessageRepository.save(m4);
+		chatMessageRepository.save(m5);
+		chatMessageRepository.save(m6);
+		chatMessageRepository.save(m7);
+		chatMessageRepository.save(m8);
+		chatMessageRepository.save(m9);
+	}
+
+	@AfterEach
+	void tearDown() {
+		chatMessageRepository.deleteAll(); // 초기화
 	}
 
 	@Test
