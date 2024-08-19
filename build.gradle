@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.2'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'kaboo'
@@ -17,6 +18,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	asciidoctorExt // REST Docs 설정
 }
 
 repositories {
@@ -28,14 +30,44 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// REST Docs 의존성
+	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// REST Docs 설정 시작
+tasks.named('bootBuildImage') {
+	builder = 'paketobuildpacks/builder-jammy-base:latest'
+}
+
+asciidoctor {   // adoc 파일 html 로 변환
+	configurations 'asciidoctorExt'
+	dependsOn test // 테스트 실행 후 실행
+}
+
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor   // asciidoctor 실행 후 실행
+	doFirst {   // 실행되기 전 기존 파일 삭제
+		delete("src/main/resources/static/docs")
+	}
+	// 위의 경로를 아래의 경로로 복사
+	from file("build/docs/asciidoc/index.html") // index.html 파일만 복사
+	into file("src/main/resources/static/docs")
+}
+
+build { // 프로젝트 빌드 전 copyDocument 실행
+	dependsOn copyDocument
+}
+// REST Docs 설정 종료
