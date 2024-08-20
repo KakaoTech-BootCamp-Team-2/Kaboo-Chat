@@ -1,5 +1,6 @@
 package kaboo.kaboochat.chat.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -12,7 +13,6 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import kaboo.kaboochat.chat.domain.redis.RedisSubscriber;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Redis 설정 클래스
@@ -26,8 +26,15 @@ import lombok.RequiredArgsConstructor;
  * @since : 2024/08/17
  */
 @Configuration
-@RequiredArgsConstructor
 public class RedisConfig {
+
+	private final String redisHost;
+	private final int redisPort;
+
+	public RedisConfig(@Value("${REDIS_HOST}") String redisHost, @Value("${REDIS_PORT}") int redisPort) {
+		this.redisHost = redisHost;
+		this.redisPort = redisPort;
+	}
 
 	/**
 	 * RedisConnectionFactory 빈 생성
@@ -40,7 +47,7 @@ public class RedisConfig {
 	 */
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-		return new LettuceConnectionFactory();
+		return new LettuceConnectionFactory(redisHost, redisPort);
 	}
 
 	/**

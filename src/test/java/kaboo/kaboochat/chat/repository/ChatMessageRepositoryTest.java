@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ActiveProfiles;
 
 import kaboo.kaboochat.chat.domain.dto.request.ChatMessageRequest;
 import kaboo.kaboochat.chat.domain.entity.ChatMessage;
@@ -22,6 +23,7 @@ import kaboo.kaboochat.chat.domain.entity.ChatMessage;
  * @author : parkjihyeok
  * @since : 2024/08/18
  */
+@ActiveProfiles("test")
 @DataMongoTest
 @DisplayName("채팅 메시지 Repository 테스트")
 class ChatMessageRepositoryTest {
