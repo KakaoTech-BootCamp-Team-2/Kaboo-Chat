@@ -1,0 +1,39 @@
+name: Build and Push Docker Image
+
+# main, dev 브랜치에 push or PR 이 오면 실행
+on:
+  push:
+    branches: 
+      - main
+      - dev
+  pull_request:
+    branches: 
+      - main
+      - dev
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # 도커 이미지 빌드용 환경 세팅 및 도커 이미지 빌드
+    - name: set up test DB and docker build
+      run: |
+        docker compose -f docker-compose-chat-test-db.yml up -d # 도커 컴포즈파일로 테스트 환경 세팅
+        DOCKER_BUILDKIT=0 docker build --network testNet -t ${{ secrets.DOCKER_IMAGE_NAME }}:latest . # 도커 빌드 (빌드 과정에서 네트워크 사용을 위해 빌드킷 0)
+        docker compose -f docker-compose-chat-test-db.yml down # 테스트 환경 제거 (네트워크까지 삭제됨)
+
+    # 도커 로그인
+    - name: docker Login
+      uses: docker/login-action@v3.3.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # 도커 이미지 push
+    - name: push docker images
+      run: |
+        docker push ${{ secrets.DOCKER_IMAGE_NAME }}:latest
+          
