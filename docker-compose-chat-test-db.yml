@@ -1,0 +1,19 @@
+# 테스트 DB 환경 세팅
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis
+    networks:
+      - testNet
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    networks:
+      - testNet
+
+networks:
+  testNet:
+    name: testNet # 네트워크 이름 지정
+    driver: bridge # 브릿지 모드
+    attachable: true # 외부접속 허용
