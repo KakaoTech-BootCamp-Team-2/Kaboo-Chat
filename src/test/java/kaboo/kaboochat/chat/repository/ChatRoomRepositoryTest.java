@@ -7,13 +7,13 @@ import java.util.Optional;
 
 import javax.sql.DataSource;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import kaboo.kaboochat.chat.domain.entity.ChatMember;
@@ -24,6 +24,7 @@ import kaboo.kaboochat.chat.domain.entity.Member;
  * @author : parkjihyeok
  * @since : 2024/08/18
  */
+@ActiveProfiles("test")
 @DataJpaTest
 @DisplayName("채팅방 Repository 테스트")
 @Transactional
@@ -57,7 +58,7 @@ class ChatRoomRepositoryTest {
 	@Test
 	@DisplayName("UUID값으로 채팅방을 찾아오는 테스트")
 	void findByRoomUUIDTest() {
-	    // Given
+		// Given
 
 		// When
 		Optional<ChatRoom> result = chatRoomRepository.findByRoomUUID(chatRoom.getChatRoomUUID());
@@ -70,7 +71,7 @@ class ChatRoomRepositoryTest {
 	@Test
 	@DisplayName("참여자로 채팅방을 찾아오는 테스트")
 	void findByUsernameTest1() {
-	    // Given
+		// Given
 		ChatRoom c2 = ChatRoom.createRoom("채팅방2");
 		ChatRoom c3 = ChatRoom.createRoom("채팅방3");
 		ChatRoom c4 = ChatRoom.createRoom("채팅방4");
