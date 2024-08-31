@@ -1,0 +1,5 @@
+/docker-compose-chat-test-db.yml
+/Dockerfile
+/.gradle/
+/build/
+/.idea/
