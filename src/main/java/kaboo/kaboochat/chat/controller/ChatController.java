@@ -47,6 +47,20 @@ public class ChatController {
 	}
 
 	/**
+	 * 채팅방의 상세 정보를 불러옵니다.
+	 *
+	 * @param roomUUID 채팅방 UUID
+	 * @return 채팅방 상세 정보
+	 */
+	@GetMapping("/rooms/details")
+	public ResponseEntity<ApiResponse<ChatRoomResponse>> findChatRoomDetails(String roomUUID) {
+		ChatRoomResponse response = chatService.findByChatUUID(roomUUID);
+
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(ApiResponse.success(response));
+	}
+
+	/**
 	 * 채팅방을 생성합니다.
 	 *
 	 * @param chatRoomRequest 채팅방 생성에 필요한 DTO

@@ -85,6 +85,41 @@ class ChatControllerTest {
 	}
 
 	@Test
+	@DisplayName("채팅방 상세 정보 조회")
+	void findChatRoomDetailsTest() throws Exception {
+		// Given
+		ChatRoom chatRoom = ChatRoom.createRoom("채팅방1");
+		ChatRoomResponse response = ChatRoomResponse.fromEntity(List.of("pjh5365", "Justin", "Apple"), chatRoom);
+		given(chatService.findByChatUUID("AAAA-BBBB-CCCC-DDDD")).willReturn(response);
+
+		// When
+		mockMvc.perform(get("/chat/rooms/details")
+						.queryParam("roomUUID", "AAAA-BBBB-CCCC-DDDD"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success").value(true))
+				.andExpect(jsonPath("$.message").value("요청이 성공적으로 처리되었습니다."))
+				.andExpect(jsonPath("$.data").exists())
+				.andDo(print())
+				.andDo(document("{class-name}/{method-name}/",
+						preprocessRequest(prettyPrint()),
+						preprocessResponse(prettyPrint()),
+						queryParameters(
+								parameterWithName("roomUUID").description("검색할 채팅방 UUID")
+						),
+						responseFields(
+								fieldWithPath("success").description("성공여부"),
+								fieldWithPath("message").description("응답 메시지"),
+								fieldWithPath("data").description("채팅방 리스트"),
+								fieldWithPath("data.usernames").description("참여자 이름 리스트"),
+								fieldWithPath("data.chatRoomUUID").description("채팅방 UUID"),
+								fieldWithPath("data.chatRoomName").description("채팅방 이름")
+						)));
+
+		// Then
+	}
+
+	@Test
 	@DisplayName("채팅방 생성")
 	void createRoomTest() throws Exception {
 		// Given

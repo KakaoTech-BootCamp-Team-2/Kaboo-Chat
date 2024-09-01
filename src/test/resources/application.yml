@@ -14,10 +14,9 @@ spring:
       ddl-auto: create
   # 테스트용 도커 컨테이너의 설정에 맞춘다.
   data:
+    redis:
+      host: redis # 도커 네트워크가 아닌 호스트의 주소를 사용
+      port: 6379
     mongodb:
-      host: mongodb
+      host: mongodb # 도커 네트워크가 아닌 호스트의 주소를 사용
       port: 27017
-
-# 테스트용 도커 컨테이너의 설정에 맞춘다.
-REDIS_HOST: redis
-REDIS_PORT: 6379
