@@ -1,10 +1,8 @@
 package kaboo.kaboochat.chat.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -13,6 +11,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import kaboo.kaboochat.chat.domain.redis.RedisSubscriber;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Redis 설정 클래스
@@ -26,29 +25,10 @@ import kaboo.kaboochat.chat.domain.redis.RedisSubscriber;
  * @since : 2024/08/17
  */
 @Configuration
+@RequiredArgsConstructor
 public class RedisConfig {
 
-	private final String redisHost;
-	private final int redisPort;
-
-	public RedisConfig(@Value("${REDIS_HOST}") String redisHost, @Value("${REDIS_PORT}") int redisPort) {
-		this.redisHost = redisHost;
-		this.redisPort = redisPort;
-	}
-
-	/**
-	 * RedisConnectionFactory 빈 생성
-	 * <p>
-	 * Lettuce 클라이언트를 사용하여 Redis 서버와의 연결을 생성하고 관리합니다.
-	 * <br>
-	 * 이 빈은 Redis 서버와의 연결을 생성하고, 다른 Redis 관련 빈들이 이 연결을 사용하여 Redis와 통신하게 됩니다.
-	 * </p>
-	 * @return RedisConnectionFactory LettuceConnectionFactory 인스턴스
-	 */
-	@Bean
-	public RedisConnectionFactory redisConnectionFactory() {
-		return new LettuceConnectionFactory(redisHost, redisPort);
-	}
+	private final RedisConnectionFactory redisConnectionFactory;
 
 	/**
 	 * RedisTemplate 빈 생성
@@ -106,7 +86,7 @@ public class RedisConfig {
 			ChannelTopic channelTopic
 	) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-		container.setConnectionFactory(redisConnectionFactory()); // Redis 연결 팩토리 설정
+		container.setConnectionFactory(redisConnectionFactory); // Redis 연결 팩토리 설정
 		container.addMessageListener(listenerAdapterChatMessage, channelTopic); // 리스너와 채널을 컨테이너에 등록
 		return container;
 	}
