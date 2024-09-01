@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Push Docker Image and Deploy
 
 # main, dev 브랜치에 push or PR 이 오면 실행
 on:
@@ -12,6 +12,7 @@ on:
       - dev
 
 jobs:
+  # 도커 이미지 빌드, 푸시
   build_and_push:
     runs-on: ubuntu-latest
 
@@ -41,3 +42,29 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_IMAGE_NAME }}:latest
           
+# 도커 이미지 EC2 인스턴스에 배포
+  deploy-to-ec2:
+    needs: build_and_push
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }} # EC2 IP 주소
+          username: ${{ secrets.EC2_USER }} # EC2 사용자
+          key: ${{ secrets.PRIVATE_KEY }} # pem 키
+
+          # 기존 컨테이너 중지
+          script: |
+            CONTAINER_ID=$(sudo docker ps -aq --filter "name=kaboo-chat")
+
+            if [ ! -z "$CONTAINER_ID" ]; then
+              sudo docker stop $CONTAINER_ID || true
+              sudo docker rm -f $CONTAINER_ID || true
+            fi
+
+            # 최신 도커 이미지로 컨테이너 실행
+            sudo docker pull ${{ secrets.DOCKER_IMAGE_NAME }}:latest # 도커 최신 이미지 다운로드
+            sudo docker run --name kaboo-chat -d -p 8080:8080 ${{ secrets.DOCKER_IMAGE_NAME }}:latest # 도커 이미지 실행
+            sudo docker image prune -f # 구버전의 도커 이미지 제거
