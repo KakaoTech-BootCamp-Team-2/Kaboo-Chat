@@ -21,6 +21,11 @@ operation::chat-controller-test/create-room-fail-test[snippets="http-response,re
 operation::chat-controller-test/find-by-username-test[snippets="http-request,query-parameters"]
 ==== 응답
 operation::chat-controller-test/find-by-username-test[snippets="http-response,response-fields"]
+=== 채팅방 상세 정보 조회 API
+==== 요청
+operation::chat-controller-test/find-chat-room-details-test[snippets="http-request,query-parameters"]
+==== 응답
+operation::chat-controller-test/find-chat-room-details-test[snippets="http-response,response-fields"]
 === 채팅방 채팅내역 조회 API
 ==== 요청
 operation::chat-controller-test/find-chat-message-test[snippets="http-request,query-parameters"]
