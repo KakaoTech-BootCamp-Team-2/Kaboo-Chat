@@ -18,6 +18,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # DB 세팅 정보 입력
+    - name: Set up application.yml
+      run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+
     # 도커 이미지 빌드용 환경 세팅 및 도커 이미지 빌드
     - name: set up test DB and docker build
       run: |
