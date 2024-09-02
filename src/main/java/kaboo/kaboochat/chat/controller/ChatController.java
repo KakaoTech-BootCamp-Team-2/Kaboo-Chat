@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
  * @author : parkjihyeok
  * @since : 2024/08/18
  */
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/chat")
 @RequiredArgsConstructor
