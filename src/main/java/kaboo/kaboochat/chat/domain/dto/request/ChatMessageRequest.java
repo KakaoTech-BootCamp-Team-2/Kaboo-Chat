@@ -17,6 +17,6 @@ public class ChatMessageRequest {
 
 	private String chatRoomUUID; // 채팅방 UUID
 	private String username; // 전송한 사용자의 ID
-	private String nickname; // 전송한 사용자의 닉네임
+	private String koreaName; // 전송한 사용자의 닉네임
 	private String message; // 메시지 내용
 }

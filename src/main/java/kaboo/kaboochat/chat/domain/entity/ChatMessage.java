@@ -29,7 +29,7 @@ public class ChatMessage {
 
 	private String chatRoomUUID; // 채팅방 UUID
 	private String username; // 전송한 사용자의 ID
-	private String nickname; // 전송한 사용자의 닉네임
+	private String koreaName; // 전송한 사용자의 닉네임
 	private String message; // 메시지 내용
 	private LocalDateTime sendAt; // 메시지 전송시간
 
@@ -37,7 +37,7 @@ public class ChatMessage {
 		return ChatMessage.builder()
 				.chatRoomUUID(dto.getChatRoomUUID())
 				.username(dto.getUsername())
-				.nickname(dto.getNickname())
+				.koreaName(dto.getKoreaName())
 				.message(dto.getMessage())
 				.sendAt(LocalDateTime.now())
 				.build();

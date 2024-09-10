@@ -195,7 +195,7 @@ class ChatServiceTest {
 		assertEquals(4, result.size());
 		assertEquals("메시지1", result.get(0).getMessage());
 		assertEquals("user2", result.get(2).getUsername());
-		assertEquals("nick1", result.get(3).getNickname());
+		assertEquals("nick1", result.get(3).getKoreaName());
 		verify(chatMessageRepository).findByChatRoomUUIDOrderBySendAtDesc(any(), any());
 	}
 
