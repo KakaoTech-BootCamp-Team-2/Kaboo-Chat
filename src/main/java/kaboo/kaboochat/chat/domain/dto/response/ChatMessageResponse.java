@@ -20,14 +20,14 @@ import lombok.Getter;
 public class ChatMessageResponse {
 
 	private String username; // 전송한 사용자의 ID
-	private String nickname; // 전송한 사용자의 닉네임
+	private String koreaName; // 전송한 사용자의 닉네임
 	private String message; // 메시지 내용
 	private LocalDateTime sendAt; // 메시지 전송시간
 
 	public static ChatMessageResponse fromEntity(ChatMessage chatMessage) {
 		return ChatMessageResponse.builder()
 				.username(chatMessage.getUsername())
-				.nickname(chatMessage.getNickname())
+				.koreaName(chatMessage.getKoreaName())
 				.message(chatMessage.getMessage())
 				.sendAt(chatMessage.getSendAt())
 				.build();

@@ -45,10 +45,10 @@ class ChatRoomRepositoryTest {
 		chatRoom = ChatRoom.createRoom("채팅방1");
 		chatRoomRepository.save(chatRoom);
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-		String sql1 = "insert into member(username, nickname, password) values ('pjh1', '1111', 'pw111')";
-		String sql2 = "insert into member(username, nickname, password) values ('pjh2', '2222', 'pw222')";
-		String sql3 = "insert into member(username, nickname, password) values ('pjh3', '3333', 'pw333')";
-		String sql4 = "insert into member(username, nickname, password) values ('pjh4', '4444', 'pw444')";
+		String sql1 = "insert into member (username, email, korea_name, english_name, password, introduce, class_num) values ('pjh1', 'pjh1@example.com', '1111', 'User One', 'password1', '안녕하세요. 유저1입니다.', 101)";
+		String sql2 = "insert into member (username, email, korea_name, english_name, password, introduce, class_num) values ('pjh2', 'pjh2@example.com', '2222', 'User Two', 'password2', '안녕하세요. 유저2입니다.', 102)";
+		String sql3 = "insert into member (username, email, korea_name, english_name, password, introduce, class_num) values ('pjh3', 'pjh3@example.com', '3333', 'User Three', 'password3', '안녕하세요. 유저3입니다.', 103)";
+		String sql4 = "insert into member (username, email, korea_name, english_name, password, introduce, class_num) values ('pjh4', 'pjh4@example.com', '4444', 'User Four', 'password4', '안녕하세요. 유저4입니다.', 104)";
 		jdbc.execute(sql1);
 		jdbc.execute(sql2);
 		jdbc.execute(sql3);

@@ -96,6 +96,6 @@ class ChatMessageRepositoryTest {
 		assertEquals(3, result.getTotalPages());
 		assertEquals("안녕6!", result.getContent().get(0).getMessage());
 		assertEquals("user3", result.getContent().get(1).getUsername());
-		assertEquals("nick2", result.getContent().get(2).getNickname());
+		assertEquals("nick2", result.getContent().get(2).getKoreaName());
 	}
 }

@@ -230,7 +230,7 @@ class ChatControllerTest {
 								fieldWithPath("message").description("응답 메시지"),
 								fieldWithPath("data[]").description("채팅내역 리스트"),
 								fieldWithPath("data[].username").description("참여자 ID"),
-								fieldWithPath("data[].nickname").description("참여자 닉네임"),
+								fieldWithPath("data[].koreaName").description("참여자 닉네임"),
 								fieldWithPath("data[].message").description("채팅 내용"),
 								fieldWithPath("data[].sendAt").description("전송 시간")
 						)));
