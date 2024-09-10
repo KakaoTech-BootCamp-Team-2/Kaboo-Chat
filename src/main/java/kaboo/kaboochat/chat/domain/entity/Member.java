@@ -23,11 +23,22 @@ public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
-	private Long id; // 기본키
+	private Long id;
+
 	@Column(nullable = false, updatable = false)
-	private String username; // 회원 ID
+	private String username;
+	@Column(nullable = false, updatable = false)
+	private String email;
+	@Column(nullable = false, name = "korea_name")
+	private String koreaName;
+	@Column(nullable = false, name = "english_name")
+	private String englishName;
 	@Column(nullable = false)
-	private String nickname; // 사용할 닉네임
-	@Column(nullable = false)
-	private String password; // 비밀번호
+	private String password;
+
+	@Column(columnDefinition = "TEXT")
+	private String introduce;
+
+	@Column(name = "class_num")
+	private int classNum;
 }

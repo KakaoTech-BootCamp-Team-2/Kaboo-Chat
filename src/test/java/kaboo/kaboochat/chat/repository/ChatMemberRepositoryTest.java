@@ -76,7 +76,7 @@ class ChatMemberRepositoryTest {
 		// Then
 		assertEquals(4, result.size());
 		assertEquals("pjh3", result.get(2).getMember().getUsername());
-		assertEquals("2222", result.get(1).getMember().getNickname());
+		assertEquals("2222", result.get(1).getMember().getKoreaName());
 		assertEquals("pw444", result.get(3).getMember().getPassword());
 	}
 }
